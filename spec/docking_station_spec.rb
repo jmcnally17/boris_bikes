@@ -1,5 +1,4 @@
 require 'docking_station'
 describe DockingStation do
-   it { expect (DockingStation.respond_to?('release_bike')) }
-
+  it { expect (DockingStation.new.release_bike) }
 end

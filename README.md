@@ -27,7 +27,7 @@ graph TD;
     DockingStation -->release_bike;
     release_bike -->Bike;
     Bike -->working?;
-
+```
 
 As a member of the public 
 So I can decide whether to use the docking station
@@ -44,6 +44,6 @@ graph TD;
     Person-->DockingStation;
     DockingStation -->Bike;
     Bike -->docked?;
-
+```
 
     

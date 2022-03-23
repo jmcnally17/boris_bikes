@@ -36,14 +36,13 @@ I want to see a bike that has been docked
 |  Objects        |  Messages      |
 | ----------      | -------------  | 
 | Person          |                |
-| Bike            | docked?|
-| DockingStation |    |
+| Bike            | |
+| DockingStation |  no_of_bikes  |
 
 ```mermaid
 graph TD;
     Person-->DockingStation;
-    DockingStation -->Bike;
-    Bike -->docked?;
+    DockingStation -->no_of_bikes;
 ```
 
     

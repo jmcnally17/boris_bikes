@@ -6,7 +6,11 @@ class DockingStation
   end
 
   def release_bike
-    Bike.new
+    if @bikes.length > 0
+      @bikes.pop
+    else
+      raise "There are no bikes available"
+    end
   end
 
   def no_of_bikes
@@ -14,17 +18,12 @@ class DockingStation
   end
 
   def dock(bike)
-    @bikes.push(bike)
+    @bikes.push(bike) if bike.instance_of?(Bike)
   end
-
 end
-
-
 
 class Bike
   def working?
     true
   end
-
-  
 end

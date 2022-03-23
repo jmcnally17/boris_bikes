@@ -7,4 +7,5 @@ describe DockingStation do
     bike = DockingStation.new.release_bike
     expect(bike.working?).to be_truthy
   end
+
 end

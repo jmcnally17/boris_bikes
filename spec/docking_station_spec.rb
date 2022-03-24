@@ -2,7 +2,6 @@ require 'docking_station'
 
 describe DockingStation do
   let(:station) { DockingStation.new}
-  let(:bike) { Bike.new}
   let(:station50) {DockingStation.new(50)}
   let(:broken_bike) {Bike.new("Broken")}
 
@@ -11,7 +10,7 @@ describe DockingStation do
   end
 
   it 'docks the bike to the station' do
-    expect(station.dock(bike).length).to be > 0
+    expect(station.dock(double(:bike)).length).to be > 0
   end
 
   it 'Any bikes available in docking station?' do
@@ -19,8 +18,8 @@ describe DockingStation do
   end
 
   it 'raises error when docking station is full' do
-    (DockingStation::DEFAULT_CAPACITY).times { station.dock(bike) }
-    expect { station.dock(bike) }.to raise_error("This docking station is full")
+    (DockingStation::DEFAULT_CAPACITY).times { station.dock(double(:bike)) }
+    expect { station.dock(double(:bike)) }.to raise_error("This docking station is full")
   end
 
   it 'changes capacity to what the user inputs' do
@@ -28,8 +27,8 @@ describe DockingStation do
   end
 
   it 'checks it can store no more than the capacity given by the user' do
-    50.times{station50.dock(Bike.new)}
-    expect{station50.dock(Bike.new)}.to raise_error("This docking station is full")
+    50.times{station50.dock(double(:bike))}
+    expect{station50.dock(double(:bike))}.to raise_error("This docking station is full")
   end
 
   it 'expects a default capacity of 20 when no parameters are given' do
@@ -37,13 +36,20 @@ describe DockingStation do
   end
 
   it "docks bike while bike's state is broken" do
-    station.dock(broken_bike)
+    bike = double(:bike).reports_broken
+    station.dock(bike)
     expect(station.bikes.length).to eq 1
   end 
 
   it 'does not release bike if bike is broken' do
-    station.dock(broken_bike)
-    expect {station.release_bike}.to raise_error "Bike is broken"
+    bike = double(:bike).reports_broken
+    station.dock(bike)
+    expect {station.release_bike}.to raise_error("Bike is broken")
   end
 
+  it "releases working bikes" do
+    subject.dock double(:bike)
+    bike = station.release_bike
+    expect(bike).to be_working
+  end
 end

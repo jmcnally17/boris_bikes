@@ -19,7 +19,7 @@ class DockingStation
 
   def dock(bike)
     raise "This docking station is full" if full?
-    @bikes.push(bike) if bike.instance_of?(Bike)
+    @bikes.push(bike)
   end
 
   private

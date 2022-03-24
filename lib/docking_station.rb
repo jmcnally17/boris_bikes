@@ -18,7 +18,7 @@ class DockingStation
   end
 
   def dock(bike)
-    raise "This docking station is full" if @bikes.length != 0
+    raise "This docking station is full" if @bikes.length == 20
     @bikes.push(bike) if bike.instance_of?(Bike)
   end
 end

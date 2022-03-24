@@ -4,6 +4,7 @@ describe DockingStation do
   let(:station) { DockingStation.new}
   let(:bike) { Bike.new}
   let(:station50) {DockingStation.new(50)}
+  let(:broken_bike) {Bike.new("Broken")}
 
   it 'checks if bikes are docked' do
     expect(station.no_of_bikes).to be_an_instance_of(Integer)
@@ -34,12 +35,15 @@ describe DockingStation do
   it 'expects a default capacity of 20 when no parameters are given' do
     expect(DockingStation.new.capacity).to eq 20
   end
+
   it "docks bike while bike's state is broken" do
-    station.reports_broken(bike)
+    station.dock(broken_bike)
     expect(station.bikes.length).to eq 1
   end 
-  it "reports bike as broken if user tries to return broken bike" do
-    station.reports_broken(bike)
-    expect(bike.state).to eq "Broken"
+
+  it 'does not release bike if bike is broken' do
+    station.dock(broken_bike)
+    expect {station.release_bike}.to raise_error "Bike is broken"
   end
+
 end

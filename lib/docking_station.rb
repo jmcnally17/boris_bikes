@@ -8,11 +8,9 @@ class DockingStation
   end
 
   def release_bike
-    if @bikes.empty?
-      raise "There are no bikes available"
-    else
-      @bikes.pop
-   end
+    raise "There are no bikes available" if @bikes.empty?
+    raise "Bike is broken" if @bikes[-1].state == "Broken"
+    @bikes.pop
   end
 
   def no_of_bikes
@@ -22,11 +20,6 @@ class DockingStation
   def dock(bike)
     raise "This docking station is full" if full?
     @bikes.push(bike) if bike.instance_of?(Bike)
-  end
-
-  def reports_broken(bike)
-    bike.state = "Broken"
-    @bikes << bike
   end
 
   private
@@ -48,6 +41,10 @@ class Bike
   end
 
   def working?
-    true
+    @state == "Working" ? true : false
+  end
+
+  def reports_broken
+    @state = "Broken"
   end
 end

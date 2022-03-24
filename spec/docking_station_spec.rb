@@ -3,6 +3,7 @@ require 'docking_station'
 describe DockingStation do
   let(:station) { DockingStation.new}
   let(:bike) { Bike.new}
+  let(:station50) {DockingStation.new(50)}
 
   it 'checks if bikes are docked' do
     expect(station.no_of_bikes).to be_an_instance_of(Integer)
@@ -19,5 +20,18 @@ describe DockingStation do
   it 'raises error when docking station is full' do
     (DockingStation::DEFAULT_CAPACITY).times { station.dock(bike) }
     expect { station.dock(bike) }.to raise_error("This docking station is full")
+  end
+
+  it 'changes capacity to what the user inputs' do
+    expect(station50.capacity).to eq 50
+  end
+
+  it 'checks it can store no more than the capacity given by the user' do
+    50.times{station50.dock(Bike.new)}
+    expect{station50.dock(Bike.new)}.to raise_error("This docking station is full")
+  end
+
+  it 'expects a default capacity of 20 when no parameters are given' do
+    expect(DockingStation.new.capacity).to eq 20
   end
 end

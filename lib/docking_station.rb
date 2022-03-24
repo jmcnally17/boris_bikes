@@ -24,6 +24,11 @@ class DockingStation
     @bikes.push(bike) if bike.instance_of?(Bike)
   end
 
+  def reports_broken(bike)
+    bike.state = "Broken"
+    @bikes << bike
+  end
+
   private
 
   def full?
@@ -36,6 +41,12 @@ class DockingStation
 end
 
 class Bike
+  attr_accessor :state
+
+  def initialize(state = "Working")
+    @state = state
+  end
+
   def working?
     true
   end

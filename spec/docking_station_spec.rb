@@ -34,4 +34,12 @@ describe DockingStation do
   it 'expects a default capacity of 20 when no parameters are given' do
     expect(DockingStation.new.capacity).to eq 20
   end
+  it "docks bike while bike's state is broken" do
+    station.reports_broken(bike)
+    expect(station.bikes.length).to eq 1
+  end 
+  it "reports bike as broken if user tries to return broken bike" do
+    station.reports_broken(bike)
+    expect(bike.state).to eq "Broken"
+  end
 end

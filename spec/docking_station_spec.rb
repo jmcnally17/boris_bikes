@@ -3,7 +3,7 @@ require 'docking_station'
 describe DockingStation do
   let(:station) { DockingStation.new}
   let(:station50) {DockingStation.new(50)}
-  let(:broken_bike) {Bike.new("Broken")}
+  let(:bike) { double :bike }
 
   it 'checks if bikes are docked' do
     expect(station.no_of_bikes).to be_an_instance_of(Integer)
@@ -36,20 +36,21 @@ describe DockingStation do
   end
 
   it "docks bike while bike's state is broken" do
-    bike = double(:bike).reports_broken
+    allow(bike).to receive(:state).and_return "Broken"
     station.dock(bike)
     expect(station.bikes.length).to eq 1
   end 
 
   it 'does not release bike if bike is broken' do
-    bike = double(:bike).reports_broken
+    allow(bike).to receive(:state).and_return "Broken"
     station.dock(bike)
     expect {station.release_bike}.to raise_error("Bike is broken")
   end
 
   it "releases working bikes" do
-    subject.dock double(:bike)
-    bike = station.release_bike
-    expect(bike).to be_working
+    allow(bike).to receive(:working?).and_return true
+    allow(bike).to receive(:state).and_return "Working"
+    station.dock(bike)
+    expect(station.release_bike).to be_working
   end
 end

@@ -1,3 +1,5 @@
+require_relative './bike'
+
 class DockingStation
   DEFAULT_CAPACITY = 20
   attr_reader :bikes, :capacity
@@ -30,21 +32,5 @@ class DockingStation
 
   def empty?
     @bikes.empty?
-  end
-end
-
-class Bike
-  attr_accessor :state
-
-  def initialize(state = "Working")
-    @state = state
-  end
-
-  def working?
-    @state == "Working" ? true : false
-  end
-
-  def reports_broken
-    @state = "Broken"
   end
 end

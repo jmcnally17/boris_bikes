@@ -1,4 +1,4 @@
-require 'docking_station'
+require_relative '../lib/bike'
 
 describe Bike do
   let(:bike) { Bike.new }
